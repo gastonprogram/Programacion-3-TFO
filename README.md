@@ -256,5 +256,3 @@ The workspace contains the following folders:
 - `lib`: dependencies (if needed)
 - `bin`: compiled output files
 - `datos/`: data files (created automatically)
-#   P r o g r a m a c i o n - 3 - T F O  
- 
