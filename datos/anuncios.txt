@@ -1,0 +1,6 @@
+Banner Principal,5,100
+Video Promocional,8,180
+Pop-up Interactivo,3,60
+Story Patrocinada,4,90
+Banner Lateral,2,40
+Video Corto,6,130
