@@ -21,7 +21,7 @@ public class GestionPublicaciones {
     public void mostrarVistaCronologica() {
         List<PublicacionModelo> cronologica = servicioPublicaciones.obtenerVistaCronologica();
 
-        System.out.println("\n📅 VISTA CRONOLÓGICA DE PUBLICACIONES");
+        System.out.println("\nVISTA CRONOLÓGICA DE PUBLICACIONES");
         System.out.println("═══════════════════════════════════════════════════════");
 
         if (cronologica.isEmpty()) {
@@ -42,7 +42,7 @@ public class GestionPublicaciones {
     public void mostrarVistaPorRelevancia(int top) {
         List<PublicacionModelo> topRelevantes = servicioPublicaciones.obtenerTopPorRelevancia(top);
 
-        System.out.println("\n🔥 TOP " + top + " PUBLICACIONES POR RELEVANCIA");
+        System.out.println("\nTOP " + top + " PUBLICACIONES POR RELEVANCIA");
         System.out.println("═══════════════════════════════════════════════════════");
 
         if (topRelevantes.isEmpty()) {

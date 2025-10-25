@@ -15,7 +15,7 @@ public class DatosIniciales {
 
                 // Verificar si ya hay datos
                 if (!servicioUsuarios.obtenerTodosLosUsuarios().isEmpty()) {
-                        System.out.println("ℹ️ Datos existentes encontrados. No se inicializan datos de prueba.");
+                        System.out.println("ℹDatos existentes encontrados. No se inicializan datos de prueba.");
                         return;
                 }
 
@@ -90,7 +90,7 @@ public class DatosIniciales {
                 servicioPublicaciones.guardarPublicaciones();
                 servicioAnuncios.guardarAnuncios();
 
-                System.out.println("✅ Datos de prueba inicializados correctamente.");
+                System.out.println("Datos de prueba inicializados correctamente.");
                 System.out.println("   - " + servicioUsuarios.obtenerTodosLosUsuarios().size() + " usuarios creados");
                 System.out.println(
                                 "   - " + servicioPublicaciones.obtenerTodasLasPublicaciones().size()

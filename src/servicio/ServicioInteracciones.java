@@ -36,9 +36,9 @@ public class ServicioInteracciones {
             interacciones.add(nuevaInteraccion);
             gestorDatos.guardarInteracciones(interacciones);
             System.out.println(
-                    "👍 " + usuarioId + " le dio like a la publicación " + publicacionId + " de " + autorPublicacion);
+                    usuarioId + " le dio like a la publicación " + publicacionId + " de " + autorPublicacion);
         } else {
-            System.out.println("⚠️ El usuario " + usuarioId + " ya le dio like a esta publicación.");
+            System.out.println("El usuario " + usuarioId + " ya le dio like a esta publicación.");
         }
     }
 
@@ -131,6 +131,6 @@ public class ServicioInteracciones {
         interacciones.add(new Interaccion("U005", "P001", "U002")); // Laura likes publicación de Juan
 
         gestorDatos.guardarInteracciones(interacciones);
-        System.out.println("🎯 Generadas " + interacciones.size() + " interacciones de ejemplo para el algoritmo.");
+        System.out.println("Generadas " + interacciones.size() + " interacciones de ejemplo para el algoritmo.");
     }
 }

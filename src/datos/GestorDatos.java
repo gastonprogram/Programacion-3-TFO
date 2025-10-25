@@ -50,9 +50,9 @@ public class GestorDatos {
                 }
             }
 
-            System.out.println("✅ Usuarios guardados exitosamente.");
+            System.out.println("Usuarios guardados exitosamente.");
         } catch (IOException e) {
-            System.err.println("❌ Error al guardar usuarios: " + e.getMessage());
+            System.err.println("Error al guardar usuarios: " + e.getMessage());
         }
     }
 
@@ -79,7 +79,7 @@ public class GestorDatos {
                 }
             }
         } catch (IOException e) {
-            System.err.println("⚠️ Error al cargar usuarios: " + e.getMessage());
+            System.err.println("Error al cargar usuarios: " + e.getMessage());
             return usuarios;
         }
 
@@ -104,7 +104,7 @@ public class GestorDatos {
                     }
                 }
             } catch (IOException e) {
-                System.err.println("⚠️ Error al cargar amistades: " + e.getMessage());
+                System.err.println("Error al cargar amistades: " + e.getMessage());
             }
         }
 
@@ -129,9 +129,9 @@ public class GestorDatos {
                         pub.getTamano() + "," +
                         pub.getBeneficio());
             }
-            System.out.println("✅ Publicaciones guardadas exitosamente.");
+            System.out.println("Publicaciones guardadas exitosamente.");
         } catch (IOException e) {
-            System.err.println("❌ Error al guardar publicaciones: " + e.getMessage());
+            System.err.println("Error al guardar publicaciones: " + e.getMessage());
         }
     }
 
@@ -164,7 +164,7 @@ public class GestorDatos {
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            System.err.println("⚠️ Error al cargar publicaciones: " + e.getMessage());
+            System.err.println("Error al cargar publicaciones: " + e.getMessage());
         }
 
         return publicaciones;
@@ -182,9 +182,9 @@ public class GestorDatos {
                         anuncio.getCosto() + "," +
                         anuncio.getAlcance());
             }
-            System.out.println("✅ Anuncios guardados exitosamente.");
+            System.out.println("Anuncios guardados exitosamente.");
         } catch (IOException e) {
-            System.err.println("❌ Error al guardar anuncios: " + e.getMessage());
+            System.err.println("Error al guardar anuncios: " + e.getMessage());
         }
     }
 
@@ -211,7 +211,7 @@ public class GestorDatos {
                 }
             }
         } catch (IOException | NumberFormatException e) {
-            System.err.println("⚠️ Error al cargar anuncios: " + e.getMessage());
+            System.err.println("Error al cargar anuncios: " + e.getMessage());
         }
 
         return anuncios;
@@ -231,9 +231,9 @@ public class GestorDatos {
                         interaccion.getAutorPublicacion() + "," +
                         interaccion.getTimestamp());
             }
-            System.out.println("✅ Interacciones guardadas exitosamente.");
+            System.out.println("Interacciones guardadas exitosamente.");
         } catch (IOException e) {
-            System.err.println("❌ Error al guardar interacciones: " + e.getMessage());
+            System.err.println("Error al guardar interacciones: " + e.getMessage());
         }
     }
 

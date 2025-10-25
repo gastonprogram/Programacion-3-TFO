@@ -109,11 +109,11 @@ public class RutasInfluencia {
      * Muestra la ruta de influencia encontrada.
      */
     public static void mostrarRuta(List<String> ruta, Map<String, String> nombresUsuarios) {
-        System.out.println("\n🔍 RUTA DE INFLUENCIA ENCONTRADA");
+        System.out.println("\nRUTA DE INFLUENCIA ENCONTRADA");
         System.out.println("═══════════════════════════════════════");
         
         if (ruta == null) {
-            System.out.println("❌ No existe conexión entre los usuarios.");
+            System.out.println("No existe conexión entre los usuarios.");
         } else {
             System.out.println("Longitud de la cadena: " + (ruta.size() - 1) + " saltos");
             System.out.print("Ruta: ");

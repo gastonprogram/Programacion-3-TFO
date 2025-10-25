@@ -22,7 +22,7 @@ public class ServicioAnuncios {
     
     public void agregarAnuncio(Anuncio anuncio) {
         anuncios.add(anuncio);
-        System.out.println("✅ Anuncio agregado: " + anuncio.getNombre());
+        System.out.println("Anuncio agregado: " + anuncio.getNombre());
     }
     
     public List<Anuncio> obtenerTodosLosAnuncios() {
@@ -35,7 +35,7 @@ public class ServicioAnuncios {
             return;
         }
         
-        System.out.println("\n📢 LISTA DE ANUNCIOS:");
+        System.out.println("\nLISTA DE ANUNCIOS:");
         System.out.println("═══════════════════════════════════════");
         for (Anuncio anuncio : anuncios) {
             System.out.println(anuncio);

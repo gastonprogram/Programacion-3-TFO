@@ -74,11 +74,11 @@ public class AsignacionPublicidad {
         }
 
         public void mostrarResultado(int presupuesto) {
-            System.out.println("\n💰 RESULTADO DE ASIGNACIÓN DE PUBLICIDAD");
+            System.out.println("\nRESULTADO DE ASIGNACIÓN DE PUBLICIDAD");
             System.out.println("═══════════════════════════════════════════════");
             System.out.println("Presupuesto disponible: $" + presupuesto);
             System.out.println("Alcance máximo obtenido: " + alcanceMaximo + " usuarios");
-            System.out.println("\n📢 Anuncios seleccionados:");
+            System.out.println("\nAnuncios seleccionados:");
 
             int costoTotal = 0;
             for (Anuncio anuncio : anunciosSeleccionados) {

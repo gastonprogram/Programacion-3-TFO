@@ -65,7 +65,7 @@ public class ServicioUsuarios {
             return;
         }
         
-        System.out.println("\n👥 LISTA DE USUARIOS:");
+        System.out.println("\nLISTA DE USUARIOS:");
         System.out.println("═══════════════════════════════════════");
         for (Usuario usuario : usuarios.values()) {
             System.out.println(usuario);

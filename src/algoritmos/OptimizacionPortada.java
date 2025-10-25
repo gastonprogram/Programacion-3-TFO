@@ -74,11 +74,11 @@ public class OptimizacionPortada {
         public List<PublicacionModelo> getPublicacionesSeleccionadas() { return publicacionesSeleccionadas; }
         
         public void mostrarResultado() {
-            System.out.println("\n📱 RESULTADO DE OPTIMIZACIÓN DE PORTADA");
+            System.out.println("\nRESULTADO DE OPTIMIZACIÓN DE PORTADA");
             System.out.println("═══════════════════════════════════════════════════");
             System.out.println("Espacio máximo disponible: " + espacioMaximo + " unidades");
             System.out.println("Beneficio máximo alcanzado: " + beneficioMaximo);
-            System.out.println("\n✅ Publicaciones seleccionadas para la portada:");
+            System.out.println("\nPublicaciones seleccionadas para la portada:");
             
             int espacioUtilizado = 0;
             for (PublicacionModelo pub : publicacionesSeleccionadas) {

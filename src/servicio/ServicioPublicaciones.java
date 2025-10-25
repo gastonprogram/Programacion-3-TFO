@@ -22,7 +22,7 @@ public class ServicioPublicaciones {
 
     public void agregarPublicacion(PublicacionModelo publicacion) {
         publicaciones.add(publicacion);
-        System.out.println("✅ Publicación agregada: " + publicacion.getId());
+        System.out.println("Publicación agregada: " + publicacion.getId());
     }
 
     public List<PublicacionModelo> obtenerTodasLasPublicaciones() {
@@ -67,7 +67,7 @@ public class ServicioPublicaciones {
             return;
         }
 
-        System.out.println("\n📝 LISTA DE PUBLICACIONES:");
+        System.out.println("\nLISTA DE PUBLICACIONES:");
         System.out.println("═══════════════════════════════════════════════════════════════");
         for (PublicacionModelo pub : publicaciones) {
             System.out.println(pub);

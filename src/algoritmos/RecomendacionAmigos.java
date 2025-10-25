@@ -212,17 +212,17 @@ public class RecomendacionAmigos {
      */
     public static void mostrarRecomendaciones(String usuarioId, List<String> recomendaciones,
             Map<String, String> nombresUsuarios) {
-        System.out.println("\n🎯 RECOMENDACIONES INTELIGENTES PARA: " + usuarioId);
+        System.out.println("\nRECOMENDACIONES INTELIGENTES PARA: " + usuarioId);
         System.out.println("═══════════════════════════════════════════════════════════════");
 
         if (recomendaciones.isEmpty()) {
-            System.out.println("❌ No hay recomendaciones disponibles en este momento.");
-            System.out.println("\n🔍 Posibles razones:");
+            System.out.println("No hay recomendaciones disponibles en este momento.");
+            System.out.println("\nPosibles razones:");
             System.out.println("   • Ya eres amigo de todos los usuarios con alta afinidad");
             System.out.println("   • La red de amistades está muy fragmentada");
             System.out.println("   • Pocas interacciones (likes) registradas en el sistema");
         } else {
-            System.out.println("🏆 USUARIOS RECOMENDADOS (ordenados por afinidad de interacciones):");
+            System.out.println("USUARIOS RECOMENDADOS (ordenados por afinidad de interacciones):");
 
             for (int i = 0; i < recomendaciones.size(); i++) {
                 String recomendado = recomendaciones.get(i);
@@ -233,19 +233,19 @@ public class RecomendacionAmigos {
                 // Agregar indicadores de calidad basados en posición
                 switch (i) {
                     case 0:
-                        indicador = "🥇";
+                        indicador = "1";
                         razon = " (máxima afinidad por likes)";
                         break;
                     case 1:
-                        indicador = "🥈";
+                        indicador = "2";
                         razon = " (alta afinidad)";
                         break;
                     case 2:
-                        indicador = "🥉";
+                        indicador = "3";
                         razon = " (buena afinidad)";
                         break;
                     default:
-                        indicador = "⭐";
+                        indicador = "~";
                         razon = " (afinidad detectada)";
                         break;
                 }
