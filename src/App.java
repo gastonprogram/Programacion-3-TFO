@@ -67,7 +67,7 @@ public class App {
                     despedida();
                     break;
                 default:
-                    System.out.println("❌ Opción inválida. Intente nuevamente.");
+                    System.out.println("Opción inválida. Intente nuevamente.");
             }
 
             if (continuar && opcion != 0) {
@@ -79,7 +79,7 @@ public class App {
     }
 
     private static void inicializarSistema() {
-        System.out.println("🚀 Iniciando Sistema de Red Social...\n");
+        System.out.println("Iniciando Sistema de Red Social...\n");
 
         gestorDatos = new GestorDatos();
         servicioUsuarios = new ServicioUsuarios(gestorDatos);
@@ -105,22 +105,19 @@ public class App {
     private static void mostrarMenuPrincipal() {
         System.out.println("\n┌─────────────────── MENÚ PRINCIPAL ───────────────────┐");
         System.out.println("│                                                      │");
-        System.out.println("│  1️⃣  Gestión de Usuarios                            │");
-        System.out.println("│  2️⃣  Gestión de Publicaciones                       │");
-        System.out.println("│  3️⃣  Gestión de Anuncios                            │");
-        System.out.println("│  4️⃣  Gestión de Interacciones (Likes) 👍            │");
+        System.out.println("│     1. Gestión de Usuarios                            │");
+        System.out.println("│     2. Gestión de Publicaciones                       │");
+        System.out.println("│     3. Gestión de Anuncios                            │");
         System.out.println("│                                                      │");
         System.out.println("│  ── Módulos de Algoritmos ──                        │");
-        System.out.println("│  5️⃣  Asignación de Publicidad (Prog. Dinámica)      │");
-        System.out.println("│  6️⃣  Optimización de Portada (Prog. Dinámica)       │");
-        System.out.println("│  7️⃣  Recomendación Amigos (Dijkstra + Likes) 🎯     │");
-        System.out.println("│  8️⃣  Rutas de Influencia (BFS)                      │");
-        System.out.println("│  9️⃣  Visualización de Publicaciones (Heap)          │");
+        System.out.println("│     4. Asignación de Publicidad (Prog. Dinámica)      │");
+        System.out.println("│     5. Optimización de Portada (Prog. Dinámica)       │");
+        System.out.println("│     6. Recomendación de Amigos (BFS)                  │");
+        System.out.println("│     7. Rutas de Influencia (BFS)                      │");
+        System.out.println("│     8. Visualización de Publicaciones (Heap)          │");
         System.out.println("│                                                      │");
-        System.out.println("│  🔟  Guardar Datos                                   │");
-        System.out.println("│  0️⃣  Salir                                          │");
-        System.out.println("│                                                      │");
-        System.out.println("└──────────────────────────────────────────────────────┘");
+        System.out.println("│     9. Guardar Datos                                  │");
+        System.out.println("│     10. Salir                                          │");
         System.out.print("Seleccione una opción: ");
     }
 
@@ -150,7 +147,7 @@ public class App {
             case 0:
                 break;
             default:
-                System.out.println("❌ Opción inválida.");
+                System.out.println("Opción inválida.");
         }
     }
 
@@ -198,7 +195,7 @@ public class App {
             case 0:
                 break;
             default:
-                System.out.println("❌ Opción inválida.");
+                System.out.println("Opción inválida.");
         }
     }
 
@@ -221,9 +218,9 @@ public class App {
         PublicacionModelo pub = servicioPublicaciones.obtenerPublicacion(id);
         if (pub != null) {
             pub.setLikes(pub.getLikes() + 1);
-            System.out.println("👍 Like agregado! Total: " + pub.getLikes() + " likes");
+            System.out.println("Like agregado! Total: " + pub.getLikes() + " likes");
         } else {
-            System.out.println("❌ Publicación no encontrada.");
+            System.out.println("Publicación no encontrada.");
         }
     }
 
@@ -249,7 +246,7 @@ public class App {
             case 0:
                 break;
             default:
-                System.out.println("❌ Opción inválida.");
+                System.out.println("Opción inválida.");
         }
     }
 
@@ -410,13 +407,13 @@ public class App {
         List<Anuncio> anuncios = servicioAnuncios.obtenerTodosLosAnuncios();
 
         if (anuncios.isEmpty()) {
-            System.out.println("❌ No hay anuncios disponibles.");
+            System.out.println("No hay anuncios disponibles.");
             return;
         }
 
         servicioAnuncios.listarAnuncios();
 
-        System.out.print("\n💰 Ingrese el presupuesto disponible: $");
+        System.out.print("\nIngrese el presupuesto disponible: $");
         int presupuesto = leerEntero();
 
         algoritmos.AsignacionPublicidad.ResultadoAsignacion resultado = algoritmos.AsignacionPublicidad
@@ -434,12 +431,12 @@ public class App {
         List<PublicacionModelo> publicaciones = servicioPublicaciones.obtenerTodasLasPublicaciones();
 
         if (publicaciones.isEmpty()) {
-            System.out.println("❌ No hay publicaciones disponibles.");
+            System.out.println("No hay publicaciones disponibles.");
             return;
         }
 
         System.out.println("\nPublicaciones disponibles: " + publicaciones.size());
-        System.out.print("📐 Ingrese el espacio máximo de la portada: ");
+        System.out.print("Ingrese el espacio máximo de la portada: ");
         int espacioMaximo = leerEntero();
 
         algoritmos.OptimizacionPortada.ResultadoOptimizacion resultado = algoritmos.OptimizacionPortada
@@ -455,7 +452,7 @@ public class App {
         System.out.println("╚══════════════════════════════════════════════════════════════════╝");
 
         if (servicioUsuarios.obtenerTodosLosUsuarios().isEmpty()) {
-            System.out.println("❌ No hay usuarios disponibles.");
+            System.out.println("No hay usuarios disponibles.");
             return;
         }
 
@@ -466,7 +463,7 @@ public class App {
 
         Usuario usuario = servicioUsuarios.obtenerUsuario(usuarioId);
         if (usuario == null) {
-            System.out.println("❌ Usuario no encontrado.");
+            System.out.println("Usuario no encontrado.");
             return;
         }
 
@@ -485,20 +482,20 @@ public class App {
         System.out.println("╚════════════════════════════════════════════════════════╝");
 
         if (servicioUsuarios.obtenerTodosLosUsuarios().isEmpty()) {
-            System.out.println("❌ No hay usuarios disponibles.");
+            System.out.println("No hay usuarios disponibles.");
             return;
         }
 
         servicioUsuarios.listarUsuarios();
 
-        System.out.print("\n🎯 ID del usuario origen: ");
+        System.out.print("\nID del usuario origen: ");
         String origen = scanner.nextLine();
-        System.out.print("🎯 ID del usuario destino: ");
+        System.out.print("ID del usuario destino: ");
         String destino = scanner.nextLine();
 
         if (servicioUsuarios.obtenerUsuario(origen) == null ||
                 servicioUsuarios.obtenerUsuario(destino) == null) {
-            System.out.println("❌ Uno o ambos usuarios no existen.");
+            System.out.println("Uno o ambos usuarios no existen.");
             return;
         }
 
@@ -530,17 +527,17 @@ public class App {
                 gestionPublicaciones.mostrarVistaPorRelevancia(top);
                 break;
             default:
-                System.out.println("❌ Opción inválida.");
+                System.out.println("Opción inválida.");
         }
     }
     // ==================== UTILIDADES ====================
 
     private static void guardarTodosDatos() {
-        System.out.println("\n💾 Guardando todos los datos...");
+        System.out.println("\nGuardando todos los datos...");
         servicioUsuarios.guardarUsuarios();
         servicioPublicaciones.guardarPublicaciones();
         servicioAnuncios.guardarAnuncios();
-        System.out.println("✅ Datos guardados correctamente.");
+        System.out.println("Datos guardados correctamente.");
     }
 
     private static Map<String, String> obtenerMapaNombres() {
@@ -565,7 +562,7 @@ public class App {
             String linea = scanner.nextLine();
             return Integer.parseInt(linea.trim());
         } catch (NumberFormatException e) {
-            System.out.println("⚠️ Entrada inválida. Se usará 0.");
+            System.out.println("Entrada inválida. Se usará 0.");
             return 0;
         }
     }
@@ -580,6 +577,6 @@ public class App {
         System.out.println("║  Guardando datos y cerrando el sistema...               ║");
         System.out.println("╚══════════════════════════════════════════════════════════╝");
         guardarTodosDatos();
-        System.out.println("\n👋 ¡Hasta pronto!\n");
+        System.out.println("\n¡Hasta pronto!\n");
     }
 }
