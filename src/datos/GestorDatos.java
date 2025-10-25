@@ -14,6 +14,7 @@ public class GestorDatos {
     private static final String ARCHIVO_AMISTADES = DIRECTORIO_DATOS + "/amistades.txt";
     private static final String ARCHIVO_PUBLICACIONES = DIRECTORIO_DATOS + "/publicaciones.txt";
     private static final String ARCHIVO_ANUNCIOS = DIRECTORIO_DATOS + "/anuncios.txt";
+    private static final String ARCHIVO_INTERACCIONES = DIRECTORIO_DATOS + "/interacciones.txt";
 
     public GestorDatos() {
         crearDirectorioSiNoExiste();
@@ -214,5 +215,58 @@ public class GestorDatos {
         }
 
         return anuncios;
+    }
+
+    // ==================== INTERACCIONES (LIKES) ====================
+
+    /**
+     * Guarda interacciones en formato CSV:
+     * usuarioId,publicacionId,autorPublicacion,timestamp
+     */
+    public void guardarInteracciones(List<Interaccion> interacciones) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(ARCHIVO_INTERACCIONES))) {
+            for (Interaccion interaccion : interacciones) {
+                pw.println(interaccion.getUsuarioId() + "," +
+                        interaccion.getPublicacionId() + "," +
+                        interaccion.getAutorPublicacion() + "," +
+                        interaccion.getTimestamp());
+            }
+            System.out.println("✅ Interacciones guardadas exitosamente.");
+        } catch (IOException e) {
+            System.err.println("❌ Error al guardar interacciones: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Carga interacciones desde archivo de texto.
+     */
+    public List<Interaccion> cargarInteracciones() {
+        List<Interaccion> interacciones = new ArrayList<>();
+        File archivo = new File(ARCHIVO_INTERACCIONES);
+
+        if (!archivo.exists()) {
+            return interacciones;
+        }
+
+        try (BufferedReader br = new BufferedReader(new FileReader(ARCHIVO_INTERACCIONES))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(",");
+                if (partes.length >= 4) {
+                    String usuarioId = partes[0];
+                    String publicacionId = partes[1];
+                    String autorPublicacion = partes[2];
+                    long timestamp = Long.parseLong(partes[3]);
+
+                    Interaccion interaccion = new Interaccion(usuarioId, publicacionId, autorPublicacion);
+                    interaccion.setTimestamp(timestamp);
+                    interacciones.add(interaccion);
+                }
+            }
+        } catch (IOException | NumberFormatException e) {
+            System.err.println("Error al cargar interacciones: " + e.getMessage());
+        }
+
+        return interacciones;
     }
 }

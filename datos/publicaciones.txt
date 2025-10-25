@@ -1,8 +1,8 @@
-POST001,U001,Mi primera publicación en la red!,1760961245468,120,3,150
-POST002,U002,Compartiendo conocimiento sobre programación,1760958245468,250,4,300
-POST003,U003,Foto del día 📸,1760964245468,80,2,100
-POST004,U004,Reflexión del fin de semana,1760956245468,350,5,400
-POST005,U005,Nuevo artículo en mi blog,1760965245468,45,1,60
-POST006,U006,Tutorial de algoritmos,1760960245468,180,3,220
-POST007,U007,Evento próximo en la universidad,1760963245468,95,2,120
-POST008,U008,Logro desbloqueado! 🎯,1760962245468,200,3,250
+P001,U001,Mi primera publicación en la red!,1760961245468,120,3,150
+P002,U002,Compartiendo conocimiento sobre programación,1760958245468,251,4,375
+P003,U003,Foto del día 📸,1760964245468,80,2,100
+P004,U004,Reflexión del fin de semana,1760956245468,350,5,400
+P005,U005,Nuevo artículo en mi blog,1760965245468,45,1,60
+P006,U006,Tutorial de algoritmos,1760960245468,180,3,220
+P007,U007,Evento próximo en la universidad,1760963245468,95,2,120
+P008,U008,Logro desbloqueado! 🎯,1760962245468,200,3,250

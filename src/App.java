@@ -15,6 +15,7 @@ public class App {
     private static ServicioUsuarios servicioUsuarios;
     private static ServicioPublicaciones servicioPublicaciones;
     private static ServicioAnuncios servicioAnuncios;
+    private static ServicioInteracciones servicioInteracciones;
 
     // Módulos de algoritmos
     private static algoritmos.GestionPublicaciones gestionPublicaciones;
@@ -41,21 +42,24 @@ public class App {
                     menuGestionAnuncios();
                     break;
                 case 4:
-                    ejecutarAsignacionPublicidad();
+                    menuGestionInteracciones();
                     break;
                 case 5:
-                    ejecutarOptimizacionPortada();
+                    ejecutarAsignacionPublicidad();
                     break;
                 case 6:
-                    ejecutarRecomendacionAmigos();
+                    ejecutarOptimizacionPortada();
                     break;
                 case 7:
-                    ejecutarRutasInfluencia();
+                    ejecutarRecomendacionAmigos();
                     break;
                 case 8:
-                    ejecutarVisualizacionPublicaciones();
+                    ejecutarRutasInfluencia();
                     break;
                 case 9:
+                    ejecutarVisualizacionPublicaciones();
+                    break;
+                case 10:
                     guardarTodosDatos();
                     break;
                 case 0:
@@ -81,6 +85,7 @@ public class App {
         servicioUsuarios = new ServicioUsuarios(gestorDatos);
         servicioPublicaciones = new ServicioPublicaciones(gestorDatos);
         servicioAnuncios = new ServicioAnuncios(gestorDatos);
+        servicioInteracciones = new ServicioInteracciones();
 
         gestionPublicaciones = new algoritmos.GestionPublicaciones(servicioPublicaciones);
 
@@ -103,15 +108,16 @@ public class App {
         System.out.println("│  1️⃣  Gestión de Usuarios                            │");
         System.out.println("│  2️⃣  Gestión de Publicaciones                       │");
         System.out.println("│  3️⃣  Gestión de Anuncios                            │");
+        System.out.println("│  4️⃣  Gestión de Interacciones (Likes) 👍            │");
         System.out.println("│                                                      │");
         System.out.println("│  ── Módulos de Algoritmos ──                        │");
-        System.out.println("│  4️⃣  Asignación de Publicidad (Prog. Dinámica)      │");
-        System.out.println("│  5️⃣  Optimización de Portada (Prog. Dinámica)       │");
-        System.out.println("│  6️⃣  Recomendación de Amigos (BFS)                  │");
-        System.out.println("│  7️⃣  Rutas de Influencia (BFS)                      │");
-        System.out.println("│  8️⃣  Visualización de Publicaciones (Heap)          │");
+        System.out.println("│  5️⃣  Asignación de Publicidad (Prog. Dinámica)      │");
+        System.out.println("│  6️⃣  Optimización de Portada (Prog. Dinámica)       │");
+        System.out.println("│  7️⃣  Recomendación Amigos (Dijkstra + Likes) 🎯     │");
+        System.out.println("│  8️⃣  Rutas de Influencia (BFS)                      │");
+        System.out.println("│  9️⃣  Visualización de Publicaciones (Heap)          │");
         System.out.println("│                                                      │");
-        System.out.println("│  9️⃣  Guardar Datos                                  │");
+        System.out.println("│  🔟  Guardar Datos                                   │");
         System.out.println("│  0️⃣  Salir                                          │");
         System.out.println("│                                                      │");
         System.out.println("└──────────────────────────────────────────────────────┘");
@@ -258,6 +264,141 @@ public class App {
         servicioAnuncios.agregarAnuncio(new Anuncio(nombre, costo, alcance));
     }
 
+    // ==================== GESTIÓN DE INTERACCIONES (LIKES) ====================
+
+    private static void menuGestionInteracciones() {
+        System.out.println("\n┌─────── GESTIÓN DE INTERACCIONES (LIKES) 👍 ───────┐");
+        System.out.println("│ 1. Ver interacciones de un usuario                │");
+        System.out.println("│ 2. Registrar like a publicación                   │");
+        System.out.println("│ 3. Ver todas las interacciones                    │");
+        System.out.println("│ 4. Analizar afinidad entre usuarios               │");
+        System.out.println("│ 0. Volver                                         │");
+        System.out.println("└───────────────────────────────────────────────────┘");
+        System.out.print("Opción: ");
+
+        int opcion = leerOpcion();
+
+        switch (opcion) {
+            case 1:
+                verInteraccionesDeUsuario();
+                break;
+            case 2:
+                registrarLikeAPublicacion();
+                break;
+            case 3:
+                verTodasLasInteracciones();
+                break;
+            case 4:
+                analizarAfinidadEntreUsuarios();
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("❌ Opción inválida.");
+        }
+    }
+
+    private static void verInteraccionesDeUsuario() {
+        if (servicioUsuarios.obtenerTodosLosUsuarios().isEmpty()) {
+            System.out.println("❌ No hay usuarios registrados.");
+            return;
+        }
+
+        servicioUsuarios.listarUsuarios();
+        System.out.print("\nIngrese ID del usuario: ");
+        String usuarioId = scanner.nextLine();
+
+        List<Interaccion> interacciones = servicioInteracciones.getInteraccionesDeUsuario(usuarioId);
+
+        System.out.println("\n👍 LIKES DADOS POR " + usuarioId + ":");
+        System.out.println("═══════════════════════════════════════");
+
+        if (interacciones.isEmpty()) {
+            System.out.println("Este usuario no ha dado likes aún.");
+        } else {
+            for (Interaccion interaccion : interacciones) {
+                System.out.println("  • Publicación " + interaccion.getPublicacionId() +
+                        " de " + interaccion.getAutorPublicacion());
+            }
+        }
+    }
+
+    private static void registrarLikeAPublicacion() {
+        if (servicioUsuarios.obtenerTodosLosUsuarios().isEmpty()) {
+            System.out.println("❌ No hay usuarios registrados.");
+            return;
+        }
+
+        if (servicioPublicaciones.obtenerTodasLasPublicaciones().isEmpty()) {
+            System.out.println("❌ No hay publicaciones disponibles.");
+            return;
+        }
+
+        servicioUsuarios.listarUsuarios();
+        System.out.print("\nUsuario que da el like: ");
+        String usuarioId = scanner.nextLine();
+
+        servicioPublicaciones.listarPublicaciones();
+        System.out.print("\nID de la publicación: ");
+        String publicacionId = scanner.nextLine();
+
+        // Obtener autor de la publicación
+        PublicacionModelo publicacion = servicioPublicaciones.obtenerPublicacion(publicacionId);
+        if (publicacion != null) {
+            servicioInteracciones.registrarLike(usuarioId, publicacionId, publicacion.getAutorId());
+        } else {
+            System.out.println("❌ Publicación no encontrada.");
+        }
+    }
+
+    private static void verTodasLasInteracciones() {
+        List<Interaccion> todasLasInteracciones = servicioInteracciones.getTodasLasInteracciones();
+
+        System.out.println("\n👍 TODAS LAS INTERACCIONES (LIKES):");
+        System.out.println("═══════════════════════════════════════");
+
+        if (todasLasInteracciones.isEmpty()) {
+            System.out.println("No hay interacciones registradas.");
+        } else {
+            for (Interaccion interaccion : todasLasInteracciones) {
+                System.out.println("  • " + interaccion.getUsuarioId() +
+                        " → like → Pub " + interaccion.getPublicacionId() +
+                        " (de " + interaccion.getAutorPublicacion() + ")");
+            }
+        }
+    }
+
+    private static void analizarAfinidadEntreUsuarios() {
+        if (servicioUsuarios.obtenerTodosLosUsuarios().size() < 2) {
+            System.out.println("❌ Se necesitan al menos 2 usuarios.");
+            return;
+        }
+
+        servicioUsuarios.listarUsuarios();
+        System.out.print("\nPrimer usuario: ");
+        String usuario1 = scanner.nextLine();
+        System.out.print("Segundo usuario: ");
+        String usuario2 = scanner.nextLine();
+
+        double afinidad = servicioInteracciones.calcularAfinidad(usuario1, usuario2);
+
+        System.out.println("\n📊 ANÁLISIS DE AFINIDAD:");
+        System.out.println("═══════════════════════════════════════");
+        System.out.println("Usuario 1: " + usuario1);
+        System.out.println("Usuario 2: " + usuario2);
+        System.out.println("Afinidad: " + String.format("%.2f", afinidad));
+
+        if (afinidad >= 3.0) {
+            System.out.println("💖 Afinidad MUY ALTA - Excelente compatibilidad");
+        } else if (afinidad >= 2.0) {
+            System.out.println("💝 Afinidad ALTA - Buena compatibilidad");
+        } else if (afinidad >= 1.0) {
+            System.out.println("💛 Afinidad MODERADA - Cierta compatibilidad");
+        } else {
+            System.out.println("💙 Afinidad BAJA - Poca compatibilidad detectada");
+        }
+    }
+
     // ==================== MÓDULOS DE ALGORITMOS ====================
 
     private static void ejecutarAsignacionPublicidad() {
@@ -308,9 +449,10 @@ public class App {
     }
 
     private static void ejecutarRecomendacionAmigos() {
-        System.out.println("\n╔════════════════════════════════════════════════════════╗");
-        System.out.println("║  RECOMENDACIÓN DE AMIGOS - Búsqueda en Grafos (BFS)  ║");
-        System.out.println("╚════════════════════════════════════════════════════════╝");
+        System.out.println("\n╔══════════════════════════════════════════════════════════════════╗");
+        System.out.println("║  RECOMENDACIÓN INTELIGENTE DE AMIGOS - Algoritmo de Dijkstra    ║");
+        System.out.println("║  📊 Basado en Análisis de Interacciones (Likes) y Afinidad      ║");
+        System.out.println("╚══════════════════════════════════════════════════════════════════╝");
 
         if (servicioUsuarios.obtenerTodosLosUsuarios().isEmpty()) {
             System.out.println("❌ No hay usuarios disponibles.");
@@ -319,7 +461,7 @@ public class App {
 
         servicioUsuarios.listarUsuarios();
 
-        System.out.print("\n🔍 Ingrese el ID del usuario: ");
+        System.out.print("\n🎯 Ingrese el ID del usuario para recomendaciones: ");
         String usuarioId = scanner.nextLine();
 
         Usuario usuario = servicioUsuarios.obtenerUsuario(usuarioId);
@@ -330,14 +472,10 @@ public class App {
 
         Map<String, List<String>> grafo = servicioUsuarios.obtenerGrafoAmistades();
 
-        // Mostrar distancias
-        Map<String, Integer> distancias = algoritmos.RecomendacionAmigos.distanciasDesde(grafo, usuarioId);
+        // Mostrar recomendaciones inteligentes usando Dijkstra + interacciones
         Map<String, String> nombres = obtenerMapaNombres();
-
-        algoritmos.RecomendacionAmigos.mostrarDistancias(usuario.getNombre(), distancias, nombres);
-
-        // Mostrar recomendaciones
-        List<String> recomendaciones = algoritmos.RecomendacionAmigos.recomendarAmigos(grafo, usuarioId);
+        List<String> recomendaciones = algoritmos.RecomendacionAmigos.recomendarAmigos(grafo, usuarioId,
+                servicioInteracciones);
         algoritmos.RecomendacionAmigos.mostrarRecomendaciones(usuario.getNombre(), recomendaciones, nombres);
     }
 
@@ -395,7 +533,6 @@ public class App {
                 System.out.println("❌ Opción inválida.");
         }
     }
-
     // ==================== UTILIDADES ====================
 
     private static void guardarTodosDatos() {
