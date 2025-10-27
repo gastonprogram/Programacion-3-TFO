@@ -121,15 +121,15 @@ public class ServicioInteracciones {
      */
     private void generarInteraccionesEjemplo() {
         // Simulación de interacciones
-        interacciones.add(new Interaccion("U001", "P001", "U002")); // Ana likes publicación de Juan
-        interacciones.add(new Interaccion("U001", "P003", "U003")); // Ana likes publicación de María
-        interacciones.add(new Interaccion("U002", "P002", "U003")); // Juan likes publicación de María
-        interacciones.add(new Interaccion("U002", "P004", "U004")); // Juan likes publicación de Pedro
-        interacciones.add(new Interaccion("U003", "P001", "U002")); // María likes publicación de Juan
-        interacciones.add(new Interaccion("U003", "P005", "U005")); // María likes publicación de Laura
-        interacciones.add(new Interaccion("U004", "P003", "U003")); // Pedro likes publicación de María
-        interacciones.add(new Interaccion("U005", "P002", "U003")); // Laura likes publicación de María
-        interacciones.add(new Interaccion("U005", "P001", "U002")); // Laura likes publicación de Juan
+        interacciones.add(new Interaccion("U001", "P001", "U002"));
+        interacciones.add(new Interaccion("U001", "P003", "U003"));
+        interacciones.add(new Interaccion("U002", "P002", "U003"));
+        interacciones.add(new Interaccion("U002", "P004", "U004"));
+        interacciones.add(new Interaccion("U003", "P001", "U002"));
+        interacciones.add(new Interaccion("U003", "P005", "U005"));
+        interacciones.add(new Interaccion("U004", "P003", "U003"));
+        interacciones.add(new Interaccion("U005", "P002", "U003"));
+        interacciones.add(new Interaccion("U005", "P001", "U002"));
 
         gestorDatos.guardarInteracciones(interacciones);
         System.out.println("Generadas " + interacciones.size() + " interacciones de ejemplo para el algoritmo.");
