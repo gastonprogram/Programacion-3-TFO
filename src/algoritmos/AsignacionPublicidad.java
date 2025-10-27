@@ -4,24 +4,22 @@ import modelo.Anuncio;
 import java.util.*;
 
 /**
- * Módulo de Asignación de Publicidad.
- * Paradigma: Programación Dinámica (Problema de la Mochila 0/1)
+ * Problema de Asignación de Publicidad.
+ * Paradigma: Programación Dinámica - Problema de la mochila
  * Objetivo: Maximizar el alcance publicitario con un presupuesto limitado.
  */
 public class AsignacionPublicidad {
 
-    /**
-     * Resuelve el problema de maximizar el alcance con un presupuesto dado.
-     * 
-     * @param anuncios    Lista de anuncios disponibles
-     * @param presupuesto Presupuesto disponible
-     * @return Máximo alcance posible y lista de anuncios seleccionados
-     */
     public static ResultadoAsignacion maxAlcance(List<Anuncio> anuncios, int presupuesto) {
+        /* resuelve el problema de maximizar el alcance con un presupuesto dado
+         * recibe una lista de anuncios y un presupuesto
+         * retorna un objeto ResultadoAsignacion que contiene el máximo alcance posible
+         * y la lista de anuncios seleccionados
+         */
         int n = anuncios.size();
         int[][] dp = new int[n + 1][presupuesto + 1];
 
-        // dp[i][j] = máximo alcance usando los primeros i anuncios con presupuesto j
+        // Llenar la tabla 
         for (int i = 1; i <= n; i++) {
             Anuncio anuncio = anuncios.get(i - 1);
             for (int j = 0; j <= presupuesto; j++) {
@@ -35,7 +33,7 @@ public class AsignacionPublicidad {
             }
         }
 
-        // Reconstruir la solución
+        // reconstruir la solución
         List<Anuncio> seleccionados = new ArrayList<>();
         int alcanceMaximo = dp[n][presupuesto];
         int w = presupuesto;
@@ -53,9 +51,7 @@ public class AsignacionPublicidad {
         return new ResultadoAsignacion(dp[n][presupuesto], seleccionados);
     }
 
-    /**
-     * Clase para encapsular el resultado del algoritmo.
-     */
+    //clase para guardar el resultado de el algortimo principal
     public static class ResultadoAsignacion {
         private int alcanceMaximo;
         private List<Anuncio> anunciosSeleccionados;

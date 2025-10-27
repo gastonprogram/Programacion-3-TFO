@@ -4,25 +4,26 @@ import modelo.PublicacionModelo;
 import java.util.*;
 
 /**
- * Módulo de Optimización de Portada.
- * Paradigma: Programación Dinámica (Problema de la Mochila 0/1)
+ * Problema de Optimización de Portada.
+ * Paradigma: Programación Dinámica - problema de la mochila
  * Objetivo: Seleccionar publicaciones que maximicen el beneficio sin exceder el espacio.
  */
 public class OptimizacionPortada {
     
-    /**
-     * Optimiza la selección de publicaciones para la portada.
-     * @param publicaciones Lista de publicaciones disponibles
-     * @param espacioMaximo Espacio máximo disponible en la portada
-     * @return Resultado con beneficio máximo y publicaciones seleccionadas
-     */
+    
     public static ResultadoOptimizacion optimizar(List<PublicacionModelo> publicaciones, int espacioMaximo) {
+        /**
+         * Optimiza la selección de publicaciones para la portada.
+         * recibe una lista de publicaciones y el espacio máximo disponible
+         * retorna el beneficio máximo y publicaciones seleccionadas
+         */
+        
+        //cantidad de publicaciones
         int n = publicaciones.size();
         
-        // dp[i][j] -> máximo beneficio con las primeras i publicaciones y j unidades de espacio
-        int[][] dp = new int[n + 1][espacioMaximo + 1];
+        int[][] tabla = new int[n + 1][espacioMaximo + 1];
         
-        // Rellenamos la tabla dinámica
+        // rellenar la tabla
         for (int i = 1; i <= n; i++) {
             PublicacionModelo pub = publicaciones.get(i - 1);
             int tamano = pub.getTamano();
@@ -31,20 +32,20 @@ public class OptimizacionPortada {
             for (int j = 1; j <= espacioMaximo; j++) {
                 if (tamano <= j) {
                     // Elegir el máximo entre tomar o no tomar la publicación
-                    dp[i][j] = Math.max(dp[i - 1][j], beneficio + dp[i - 1][j - tamano]);
+                    tabla[i][j] = Math.max(tabla[i - 1][j], beneficio + tabla[i - 1][j - tamano]);
                 } else {
-                    dp[i][j] = dp[i - 1][j];
+                    tabla[i][j] = tabla[i - 1][j];
                 }
             }
         }
         
         // Reconstrucción de la solución
-        int beneficioMaximo = dp[n][espacioMaximo];
+        int beneficioMaximo = tabla[n][espacioMaximo];
         int w = espacioMaximo;
         List<PublicacionModelo> seleccionadas = new ArrayList<>();
         
         for (int i = n; i > 0 && beneficioMaximo > 0; i--) {
-            if (beneficioMaximo != dp[i - 1][w]) {
+            if (beneficioMaximo != tabla[i - 1][w]) {
                 PublicacionModelo pub = publicaciones.get(i - 1);
                 seleccionadas.add(pub);
                 beneficioMaximo -= pub.getBeneficio();
@@ -53,11 +54,11 @@ public class OptimizacionPortada {
         }
         
         Collections.reverse(seleccionadas);
-        return new ResultadoOptimizacion(dp[n][espacioMaximo], seleccionadas, espacioMaximo);
+        return new ResultadoOptimizacion(tabla[n][espacioMaximo], seleccionadas, espacioMaximo);
     }
     
     /**
-     * Clase para encapsular el resultado del algoritmo.
+     * clase para guardar el resultado de el algortimo principal
      */
     public static class ResultadoOptimizacion {
         private int beneficioMaximo;
