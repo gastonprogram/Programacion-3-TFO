@@ -4,25 +4,22 @@ import servicio.ServicioInteracciones;
 import java.util.*;
 
 /**
- * Módulo de Recomendación de Amigos.
- * Paradigma: Algoritmo de Dijkstra con pesos basados en interacciones
- * Objetivo: Encontrar usuarios con menor "distancia social" considerando
- * afinidad por likes.
+ * Problema de Recomendación de Amigos.
+ * Paradigma: Algoritmo de Dijkstra con pesos de aristas basados en interacciones
+ * Objetivo: Encontrar usuarios con menor distancia 
  * 
- * CONSIGNA IMPLEMENTADA:
+ * Logica:
  * - Las distancias están ponderadas por interacciones (likes)
  * - Se garantiza el camino más directo usando Dijkstra con cola de prioridad
- * - Complejidad: O((V + E) log V) eficiente para miles de usuarios
- * - Recomendación basada en menor distancia social ponderada
  */
 public class RecomendacionAmigos {
 
     /**
-     * Clase para representar una arista con peso en el grafo social.
+     * clase que representa una arista
      */
     public static class Arista {
         String destino;
-        double peso; // Menor peso = mayor afinidad = mejor recomendación
+        double peso; // cuanto menos peso tenga, mayor afinidad
 
         public Arista(String destino, double peso) {
             this.destino = destino;
@@ -30,37 +27,34 @@ public class RecomendacionAmigos {
         }
     }
 
-    /**
-     * ALGORITMO DE DIJKSTRA - Encuentra la ruta de menor costo entre usuarios.
-     * 
-     * GARANTÍA: En cada paso se elige el camino más directo usando cola de
-     * prioridad.
-     * COMPLEJIDAD: O((V + E) log V) - eficiente para miles de usuarios.
-     * 
-     * @param grafo                 Grafo de amistades (usuario -> lista de amigos)
-     * @param origen                ID del usuario origen
-     * @param servicioInteracciones Servicio para calcular afinidad basada en likes
-     * @return Mapa con las distancias mínimas ponderadas desde el origen
-     */
     public static Map<String, Double> distanciasDesde(Map<String, List<String>> grafo, String origen,
             ServicioInteracciones servicioInteracciones) {
-        // 1. Convertir grafo simple a grafo ponderado por interacciones
+        /**
+         * Dijkstra - Encuentra la ruta de menor costo entre usuarios.
+         * 
+         * recibe el grafo de amistades, el usuario origen y el servicio de interacciones (clase que calcula afinidad)
+         * devuelve un mapa con las distancias mínimas desde el origen a todos los demás usuarios
+         */
+        
+
+
+        // convertir el grafo
         Map<String, List<Arista>> grafoPonderado = construirGrafoPonderado(grafo, servicioInteracciones);
 
-        // 2. Inicializar estructuras de Dijkstra
+        // inicializar dijkstra
         Map<String, Double> distancias = new HashMap<>();
         Set<String> visitados = new HashSet<>();
         PriorityQueue<String> colaPrioridad = new PriorityQueue<>(
                 Comparator.comparing(distancias::get, Comparator.nullsLast(Double::compareTo)));
 
-        // 3. Inicializar todas las distancias como infinito, excepto el origen
+        // todas las distancias son "infinito" excepto la del origen
         for (String nodo : grafo.keySet()) {
             distancias.put(nodo, Double.MAX_VALUE);
         }
         distancias.put(origen, 0.0);
         colaPrioridad.add(origen);
 
-        // 4. ALGORITMO DE DIJKSTRA - Garantía de camino óptimo
+        // algoritmo dijkstra
         while (!colaPrioridad.isEmpty()) {
             String actual = colaPrioridad.poll();
 
@@ -68,15 +62,15 @@ public class RecomendacionAmigos {
                 continue; // Ya procesado con distancia óptima
             }
 
-            visitados.add(actual); // Marcar como óptimo
+            visitados.add(actual); // optimo
 
-            // 5. Relajación de aristas: revisar todos los vecinos
+            // relaxation
             List<Arista> aristas = grafoPonderado.getOrDefault(actual, new ArrayList<>());
             for (Arista arista : aristas) {
                 String vecino = arista.destino;
                 double nuevaDistancia = distancias.get(actual) + arista.peso;
 
-                // Si encontramos un camino más corto, actualizar
+                // actualizar si es menor la distancia
                 if (nuevaDistancia < distancias.get(vecino)) {
                     distancias.put(vecino, nuevaDistancia);
                     colaPrioridad.add(vecino);
@@ -87,21 +81,16 @@ public class RecomendacionAmigos {
         return distancias;
     }
 
-    /**
-     * CONSTRUCCIÓN DEL GRAFO PONDERADO - El corazón del algoritmo de afinidad.
-     * 
-     * ALGORITMO DE DISTANCIA:
-     * - Peso base: 1.0 (conexión estándar)
-     * - Reducción por afinidad: -0.3 por cada interacción positiva
-     * - Mayor afinidad = menor peso = mejor recomendación
-     * 
-     * FACTORES CONSIDERADOS:
-     * - Likes directos entre usuarios
-     * - Gustos similares (likes a los mismos autores)
-     * - Reciprocidad en las interacciones
-     */
     private static Map<String, List<Arista>> construirGrafoPonderado(Map<String, List<String>> grafo,
             ServicioInteracciones servicioInteracciones) {
+
+        /**
+         * Se construye el grafo ponderado que se basa en las interacciones de los usuarios
+         * 
+         * FACTORES CONSIDERADOS:
+         * - Likes directos entre usuarios
+         * - Gustos similares (likes a los mismos autores)
+         */
         Map<String, List<Arista>> grafoPonderado = new HashMap<>();
 
         for (Map.Entry<String, List<String>> entry : grafo.entrySet()) {
@@ -110,7 +99,7 @@ public class RecomendacionAmigos {
             List<Arista> aristas = new ArrayList<>();
 
             for (String amigo : amigos) {
-                // CALCULAR PESO DE LA ARISTA basado en interacciones
+                // calcula el peso basado en interacciones
                 double pesoArista = calcularDistanciaSocial(usuario, amigo, servicioInteracciones);
                 aristas.add(new Arista(amigo, pesoArista));
             }
@@ -121,71 +110,53 @@ public class RecomendacionAmigos {
         return grafoPonderado;
     }
 
-    /**
-     * ALGORITMO DE DISTANCIA SOCIAL - Determina qué tan "cercanos" están dos
-     * usuarios.
-     * 
-     * FÓRMULA:
-     * distancia = peso_base - (afinidad * factor_reducción)
-     * 
-     * MENOR DISTANCIA = MAYOR AFINIDAD = MEJOR RECOMENDACIÓN
-     * 
-     * @param usuario1              ID del primer usuario
-     * @param usuario2              ID del segundo usuario (amigo directo)
-     * @param servicioInteracciones Servicio para obtener datos de likes
-     * @return Distancia social ponderada (menor = más cercanos)
-     */
+    
     private static double calcularDistanciaSocial(String usuario1, String usuario2,
             ServicioInteracciones servicioInteracciones) {
-        // Peso base para cualquier amistad
+
+        /**
+         * Determina qué tan "cercanos" están dos
+         * usuarios.
+         */
+        // peso base
         double pesoBase = 1.0;
 
-        // Calcular afinidad basada en interacciones (likes)
+        // calcula
         double afinidad = servicioInteracciones.calcularAfinidad(usuario1, usuario2);
 
-        // Factor de reducción: cada punto de afinidad reduce 0.3 la distancia
+        // para la formula
         double factorReduccion = 0.3;
-
-        // Distancia final: menor afinidad = mayor distancia
         double distanciaFinal = pesoBase - (afinidad * factorReduccion);
 
-        // Asegurar que la distancia sea siempre positiva y significativa
         return Math.max(0.1, distanciaFinal);
     }
 
-    /**
-     * RECOMENDACIÓN INTELIGENTE usando Dijkstra y análisis de interacciones.
-     * 
-     * CRITERIO: Usuarios con menor distancia social ponderada son mejores
-     * candidatos.
-     * FILTROS: Excluye amigos directos y al usuario mismo.
-     * ORDENAMIENTO: Por distancia ascendente (más cercanos primero).
-     * 
-     * @param grafo                 Grafo de amistades
-     * @param usuarioId             Usuario para quien recomendar
-     * @param servicioInteracciones Servicio de interacciones para cálculo de
-     *                              afinidad
-     * @return Lista de usuarios recomendados ordenada por afinidad
-     */
+    
     public static List<String> recomendarAmigos(Map<String, List<String>> grafo, String usuarioId,
             ServicioInteracciones servicioInteracciones) {
-        // 1. Calcular distancias usando Dijkstra con pesos por interacciones
+
+        /**
+         * Algoritmo que utiliza todos los metodos de la clase para recomendar amigos
+         * recibe el grafo de amistades, el usuario para quien se hacen las recomendaciones y el servicio de interacciones
+         * devuelve una lista de los usuarios recomendados
+         */        
+
+        // usar dijkstra
         Map<String, Double> distancias = distanciasDesde(grafo, usuarioId, servicioInteracciones);
 
-        // 2. Obtener amigos directos para filtrarlos
+        // tener los amigos directos para no contarlos
         List<String> amigosDirectos = grafo.getOrDefault(usuarioId, new ArrayList<>());
 
-        // 3. Crear lista de candidatos con sus distancias
         List<Map.Entry<String, Double>> candidatos = new ArrayList<>();
 
         for (Map.Entry<String, Double> entry : distancias.entrySet()) {
             String usuario = entry.getKey();
             double distancia = entry.getValue();
 
-            // FILTROS DE RECOMENDACIÓN:
+            // filtramos:
             // - No recomendarse a sí mismo
-            // - No recomendar amigos directos existentes
-            // - Solo usuarios alcanzables con distancia razonable
+            // - No recomendar amigos existentes
+            // - solo usuarios a distancias razonables (1 a 4)
             if (!usuario.equals(usuarioId) &&
                     !amigosDirectos.contains(usuario) &&
                     distancia > 0 && distancia <= 4.0) {
@@ -208,7 +179,7 @@ public class RecomendacionAmigos {
     }
 
     /**
-     * Muestra recomendaciones inteligentes basadas en Dijkstra e interacciones.
+     * metodo para mostrar toda la informacion de las recomendaciones obtenidas
      */
     public static void mostrarRecomendaciones(String usuarioId, List<String> recomendaciones,
             Map<String, String> nombresUsuarios) {
@@ -230,7 +201,6 @@ public class RecomendacionAmigos {
                 String indicador = "";
                 String razon = "";
 
-                // Agregar indicadores de calidad basados en posición
                 switch (i) {
                     case 0:
                         indicador = "1";
@@ -245,7 +215,7 @@ public class RecomendacionAmigos {
                         razon = " (buena afinidad)";
                         break;
                     default:
-                        indicador = "~";
+                        indicador = "-";
                         razon = " (afinidad detectada)";
                         break;
                 }

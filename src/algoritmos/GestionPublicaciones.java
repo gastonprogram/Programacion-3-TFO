@@ -5,8 +5,9 @@ import servicio.ServicioPublicaciones;
 import java.util.*;
 
 /**
- * Módulo de Gestión de Publicaciones.
- * Proporciona vistas cronológicas y por relevancia.
+ * Problema de Gestión de Publicaciones.
+ * Da la posibilidad de ver publicaciones por dos diferentes tipos de orden:
+ * cronológico y por relevancia.
  */
 public class GestionPublicaciones {
     private ServicioPublicaciones servicioPublicaciones;
@@ -16,7 +17,7 @@ public class GestionPublicaciones {
     }
 
     /**
-     * Muestra las publicaciones en orden cronológico (más recientes primero).
+     * muestra las publicaciones en orden cronológico (mas nuevas primero).
      */
     public void mostrarVistaCronologica() {
         List<PublicacionModelo> cronologica = servicioPublicaciones.obtenerVistaCronologica();
@@ -37,7 +38,7 @@ public class GestionPublicaciones {
     }
 
     /**
-     * Muestra las publicaciones más relevantes usando un Heap (PriorityQueue).
+     * Muestra las publicaciones más relevantes usando un heap (cola de prioridad).
      */
     public void mostrarVistaPorRelevancia(int top) {
         List<PublicacionModelo> topRelevantes = servicioPublicaciones.obtenerTopPorRelevancia(top);
