@@ -10,7 +10,8 @@ import java.util.*;
 public class ServicioAnuncios {
     private List<Anuncio> anuncios;
     private GestorDatos gestorDatos;
-    
+
+    // Constructor
     public ServicioAnuncios(GestorDatos gestorDatos) {
         this.gestorDatos = gestorDatos;
         this.anuncios = gestorDatos.cargarAnuncios();

@@ -8,12 +8,14 @@ public class Anuncio {
     private int costo;
     private int alcance;
 
+    //Constructor
     public Anuncio(String nombre, int costo, int alcance) {
         this.nombre = nombre;
         this.costo = costo;
         this.alcance = alcance;
     }
 
+    // Getters
     public String getNombre() {
         return nombre;
     }

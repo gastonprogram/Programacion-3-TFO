@@ -12,9 +12,10 @@ public class PublicacionModelo implements Comparable<PublicacionModelo> {
     private String contenido;
     private Date fecha;
     private int likes;
-    private int tamano; // Para optimización de portada
-    private int beneficio; // Para optimización de portada
+    private int tamano;
+    private int beneficio;
 
+    // Constructor básico
     public PublicacionModelo(String id, String autorId, String contenido, Date fecha, int likes) {
         this.id = id;
         this.autorId = autorId;
@@ -92,7 +93,7 @@ public class PublicacionModelo implements Comparable<PublicacionModelo> {
 
     public void setLikes(int likes) {
         this.likes = likes;
-        this.beneficio = calcularBeneficio(); // Recalcular beneficio
+        this.beneficio = calcularBeneficio();
     }
 
     public void setTamano(int tamano) {

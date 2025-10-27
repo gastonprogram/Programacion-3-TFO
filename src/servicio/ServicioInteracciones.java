@@ -12,6 +12,7 @@ public class ServicioInteracciones {
     private List<Interaccion> interacciones;
     private GestorDatos gestorDatos;
 
+    //Constructor
     public ServicioInteracciones() {
         this.gestorDatos = new GestorDatos();
         this.interacciones = gestorDatos.cargarInteracciones();
@@ -119,7 +120,7 @@ public class ServicioInteracciones {
      * Genera algunas interacciones de ejemplo para demostrar el algoritmo.
      */
     private void generarInteraccionesEjemplo() {
-        // Simular algunas interacciones típicas de una red social
+        // Simulación de interacciones
         interacciones.add(new Interaccion("U001", "P001", "U002")); // Ana likes publicación de Juan
         interacciones.add(new Interaccion("U001", "P003", "U003")); // Ana likes publicación de María
         interacciones.add(new Interaccion("U002", "P002", "U003")); // Juan likes publicación de María

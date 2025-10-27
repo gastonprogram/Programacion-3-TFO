@@ -10,7 +10,8 @@ import java.util.*;
 public class ServicioUsuarios {
     private Map<String, Usuario> usuarios;
     private GestorDatos gestorDatos;
-    
+
+    // Constructor
     public ServicioUsuarios(GestorDatos gestorDatos) {
         this.gestorDatos = gestorDatos;
         this.usuarios = new HashMap<>();
@@ -31,24 +32,27 @@ public class ServicioUsuarios {
     public void agregarUsuario(String id, String nombre) {
         if (!usuarios.containsKey(id)) {
             usuarios.put(id, new Usuario(id, nombre));
-            System.out.println("✅ Usuario agregado: " + nombre);
+            System.out.println("Usuario agregado: " + nombre);
         } else {
-            System.out.println("⚠️ El usuario con ID '" + id + "' ya existe.");
+            System.out.println("El usuario con ID '" + id + "' ya existe.");
         }
     }
-    
+
+    /**
+     * Método para agregar una amistad entre dos usuarios.
+     */
     public void agregarAmistad(String idUsuario1, String idUsuario2) {
         Usuario u1 = usuarios.get(idUsuario1);
         Usuario u2 = usuarios.get(idUsuario2);
         
         if (u1 == null || u2 == null) {
-            System.out.println("❌ Uno o ambos usuarios no existen.");
+            System.out.println("Uno o ambos usuarios no existen.");
             return;
         }
         
         u1.agregarAmigo(idUsuario2);
         u2.agregarAmigo(idUsuario1);
-        System.out.println("✅ Amistad creada entre " + u1.getNombre() + " y " + u2.getNombre());
+        System.out.println("Amistad creada entre " + u1.getNombre() + " y " + u2.getNombre());
     }
     
     public Usuario obtenerUsuario(String id) {
