@@ -11,6 +11,7 @@ public class ServicioPublicaciones {
     private List<PublicacionModelo> publicaciones;
     private GestorDatos gestorDatos;
 
+    // Constructor
     public ServicioPublicaciones(GestorDatos gestorDatos) {
         this.gestorDatos = gestorDatos;
         this.publicaciones = gestorDatos.cargarPublicaciones();
@@ -49,8 +50,6 @@ public class ServicioPublicaciones {
      * Vista por relevancia usando Heap (PriorityQueue).
      */
     public List<PublicacionModelo> obtenerTopPorRelevancia(int top) {
-        // heap costo: extraer: O(log n), insertar: O(log n), construir: O(n), total O(n
-        // + k log n)
         PriorityQueue<PublicacionModelo> heap = new PriorityQueue<>(publicaciones);
         List<PublicacionModelo> topRelevantes = new ArrayList<>();
 

@@ -10,14 +10,16 @@ import java.util.List;
 public class Usuario {
     private String id;
     private String nombre;
-    private List<String> amigos; // IDs de amigos
+    private List<String> amigos;
 
+    // Constructor
     public Usuario(String id, String nombre) {
         this.id = id;
         this.nombre = nombre;
         this.amigos = new ArrayList<>();
     }
 
+    // Getters
     public String getId() {
         return id;
     }
@@ -30,6 +32,7 @@ public class Usuario {
         return amigos;
     }
 
+    // Método para agregar un amigo
     public void agregarAmigo(String amigoId) {
         if (!amigos.contains(amigoId)) {
             amigos.add(amigoId);

@@ -8,11 +8,12 @@ public class Interaccion {
     private String usuarioId;
     private String publicacionId;
     private String autorPublicacion;
-    private long timestamp; // Momento del like
+    private long timestamp;
 
     public Interaccion() {
     }
 
+    //Constructor
     public Interaccion(String usuarioId, String publicacionId, String autorPublicacion) {
         this.usuarioId = usuarioId;
         this.publicacionId = publicacionId;
