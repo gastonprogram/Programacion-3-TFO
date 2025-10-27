@@ -103,7 +103,7 @@ public class App {
     }
 
     private static void mostrarMenuPrincipal() {
-        System.out.println("\n┌─────────────────── MENÚ PRINCIPAL ───────────────────┐");
+        System.out.println("\n┌─────────────────── MENU PRINCIPAL ───────────────────┐");
         System.out.println("│                                                      │");
         System.out.println("│     1. Gestión de Usuarios                           │");
         System.out.println("│     2. Gestión de Publicaciones                      │");
@@ -114,7 +114,7 @@ public class App {
         System.out.println("│     5. Asignación de Publicidad (Prog. Dinámica)     │");
         System.out.println("│     6. Optimización de Portada (Prog. Dinámica)      │");
         System.out.println("│     7. Recomendación de Amigos (Dijkstra)            │");
-        System.out.println("│     8. Rutas de Influencia (BFS)                     │");
+        System.out.println("│     8. Rutas de Influencia (Backtracking)            │");
         System.out.println("│     9. Visualización de Publicaciones (Heap)         │");
         System.out.println("│                                                      │");
         System.out.println("│     10. Guardar Datos                                │");
@@ -174,7 +174,7 @@ public class App {
     // ==================== GESTIÓN DE PUBLICACIONES ====================
 
     private static void menuGestionPublicaciones() {
-        System.out.println("\n┌─────── GESTIÓN DE PUBLICACIONES ───────┐");
+        System.out.println("\n┌─────── GESTION DE PUBLICACIONES ───────┐");
         System.out.println("│ 1. Listar publicaciones                │");
         System.out.println("│ 2. Agregar publicación                 │");
         System.out.println("│ 3. Dar like a publicación              │");
@@ -229,7 +229,7 @@ public class App {
     // ==================== GESTIÓN DE ANUNCIOS ====================
 
     private static void menuGestionAnuncios() {
-        System.out.println("\n┌─────── GESTIÓN DE ANUNCIOS ───────┐");
+        System.out.println("\n┌─────── GESTION DE ANUNCIOS ───────┐");
         System.out.println("│ 1. Listar anuncios                │");
         System.out.println("│ 2. Agregar anuncio                │");
         System.out.println("│ 0. Volver                         │");
@@ -266,7 +266,7 @@ public class App {
     // ==================== GESTIÓN DE INTERACCIONES (LIKES) ====================
 
     private static void menuGestionInteracciones() {
-        System.out.println("\n┌─────── GESTIÓN DE INTERACCIONES (LIKES) ───────┐");
+        System.out.println("\n┌─────── GESTION DE INTERACCIONES (LIKES) ───────┐");
         System.out.println("│ 1. Ver interacciones de un usuario             │");
         System.out.println("│ 2. Registrar like a publicación                │");
         System.out.println("│ 3. Ver todas las interacciones                 │");
@@ -381,7 +381,7 @@ public class App {
 
         double afinidad = servicioInteracciones.calcularAfinidad(usuario1, usuario2);
 
-        System.out.println("\nANÁLISIS DE AFINIDAD:");
+        System.out.println("\nANALISIS DE AFINIDAD:");
         System.out.println("═══════════════════════════════════════");
         System.out.println("Usuario 1: " + usuario1);
         System.out.println("Usuario 2: " + usuario2);
@@ -402,7 +402,7 @@ public class App {
 
     private static void ejecutarAsignacionPublicidad() {
         System.out.println("\n╔════════════════════════════════════════════════════════╗");
-        System.out.println("║  ASIGNACIÓN DE PUBLICIDAD - Programación Dinámica      ║");
+        System.out.println("║  ASIGNACION DE PUBLICIDAD - Programación Dinámica      ║");
         System.out.println("║  Problema de la Mochila 0/1                            ║");
         System.out.println("╚════════════════════════════════════════════════════════╝");
 
@@ -426,8 +426,7 @@ public class App {
 
     private static void ejecutarOptimizacionPortada() {
         System.out.println("\n╔════════════════════════════════════════════════════════╗");
-        System.out.println("║  OPTIMIZACIÓN DE PORTADA - Programación Dinámica       ║");
-        System.out.println("║  Problema de la Mochila 0/1                            ║");
+        System.out.println("║  OPTIMIZACION DE PORTADA - Programación Dinámica       ║");
         System.out.println("╚════════════════════════════════════════════════════════╝");
 
         List<PublicacionModelo> publicaciones = servicioPublicaciones.obtenerTodasLasPublicaciones();
@@ -449,7 +448,7 @@ public class App {
 
     private static void ejecutarRecomendacionAmigos() {
         System.out.println("\n╔══════════════════════════════════════════════════════════════════╗");
-        System.out.println("║  RECOMENDACIÓN INTELIGENTE DE AMIGOS - Algoritmo de Dijkstra     ║");
+        System.out.println("║  RECOMENDACION INTELIGENTE DE AMIGOS - Algoritmo de Dijkstra     ║");
         System.out.println("║     Basado en Análisis de Interacciones (Likes) y Afinidad       ║");
         System.out.println("╚══════════════════════════════════════════════════════════════════╝");
 
@@ -520,7 +519,7 @@ public class App {
 
     private static void ejecutarVisualizacionPublicaciones() {
         System.out.println("\n╔════════════════════════════════════════════════════════╗");
-        System.out.println("║  VISUALIZACIÓN DE PUBLICACIONES                        ║");
+        System.out.println("║  VISUALIZACION DE PUBLICACIONES                        ║");
         System.out.println("╚════════════════════════════════════════════════════════╝");
 
         System.out.println("\n1. Vista Cronológica");

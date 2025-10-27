@@ -78,7 +78,7 @@ public class AsignacionPublicidad {
 
             int costoTotal = 0;
             for (Anuncio anuncio : anunciosSeleccionados) {
-                System.out.println("  • " + anuncio.getNombre() +
+                System.out.println(" - " + anuncio.getNombre() +
                         " (Costo: $" + anuncio.getCosto() +
                         ", Alcance: " + anuncio.getAlcance() + ")");
                 costoTotal += anuncio.getCosto();

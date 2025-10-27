@@ -187,9 +187,9 @@ public class RecomendacionAmigos {
         if (recomendaciones.isEmpty()) {
             System.out.println("No hay recomendaciones disponibles en este momento.");
             System.out.println("\nPosibles razones:");
-            System.out.println("   • Ya eres amigo de todos los usuarios con alta afinidad");
-            System.out.println("   • La red de amistades está muy fragmentada");
-            System.out.println("   • Pocas interacciones (likes) registradas en el sistema");
+            System.out.println("  - Ya eres amigo de todos los usuarios con alta afinidad");
+            System.out.println("  - La red de amistades está muy fragmentada");
+            System.out.println("  - Pocas interacciones (likes) registradas en el sistema");
         } else {
             System.out.println("USUARIOS RECOMENDADOS (ordenados por afinidad de interacciones):");
 

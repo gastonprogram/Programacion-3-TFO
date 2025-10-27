@@ -22,7 +22,7 @@ public class GestionPublicaciones {
     public void mostrarVistaCronologica() {
         List<PublicacionModelo> cronologica = servicioPublicaciones.obtenerVistaCronologica();
 
-        System.out.println("\nVISTA CRONOLÓGICA DE PUBLICACIONES");
+        System.out.println("\nVISTA CRONOLOGICA DE PUBLICACIONES");
         System.out.println("═══════════════════════════════════════════════════════");
 
         if (cronologica.isEmpty()) {
@@ -31,7 +31,7 @@ public class GestionPublicaciones {
         }
 
         for (PublicacionModelo pub : cronologica) {
-            System.out.println("  • " + pub.getId() +
+            System.out.println(" - " + pub.getId() +
                     " | Fecha: " + pub.getFecha() +
                     " | Likes: " + pub.getLikes());
         }

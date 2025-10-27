@@ -130,7 +130,7 @@ public class RutasInfluencia {
                 System.out.print(nombre);
                 
                 if (i < ruta.size() - 1) {
-                    System.out.print(" → ");
+                    System.out.print(" -> ");
                 }
             }
             System.out.println();
