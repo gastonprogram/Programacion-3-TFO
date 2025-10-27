@@ -3,110 +3,116 @@ package algoritmos;
 import java.util.*;
 
 /**
- * Módulo de Rutas de Influencia.
- * Paradigma: Búsqueda en Grafos (BFS)
- * Objetivo: Encontrar la cadena de influencia más corta entre dos usuarios.
+ * Problema de Rutas de Influencia.
+ * Paradigma: Backtracking con poda
+ * Objetivo: Encontrar la cadena de influencia más efectiva entre dos usuarios.
  */
 public class RutasInfluencia {
+    private Map<String, List<String>> grafo;
+    private List<String> mejorCamino;
+    private double mejorEfectividad;
     
-    /**
-     * Encuentra la ruta más corta entre dos usuarios usando BFS.
-     * @param grafo Grafo de amistades (mapa de usuario -> lista de amigos)
-     * @param origen ID del usuario origen
-     * @param destino ID del usuario destino
-     * @return Lista de IDs que representa la ruta desde origen hasta destino, o null si no existe
-     */
-    public static List<String> rutaMasCorta(Map<String, List<String>> grafo, String origen, String destino) {
-        Queue<List<String>> cola = new LinkedList<>();
-        Set<String> visitados = new HashSet<>();
-        
-        // Comenzamos con el nodo origen
-        cola.add(Arrays.asList(origen));
-        
-        while (!cola.isEmpty()) {
-            List<String> ruta = cola.poll();
-            String ultimo = ruta.get(ruta.size() - 1);
-            
-            // Si encontramos el destino, devolvemos la ruta completa
-            if (ultimo.equals(destino)) {
-                return ruta;
-            }
-            
-            // Marcamos el nodo como visitado
-            if (!visitados.contains(ultimo)) {
-                visitados.add(ultimo);
-                
-                // Exploramos sus vecinos
-                List<String> vecinos = grafo.getOrDefault(ultimo, new ArrayList<>());
-                for (String vecino : vecinos) {
-                    if (!visitados.contains(vecino)) {
-                        List<String> nuevaRuta = new ArrayList<>(ruta);
-                        nuevaRuta.add(vecino);
-                        cola.add(nuevaRuta);
-                    }
-                }
-            }
-        }
-        
-        // Si no hay conexión posible
-        return null;
+    public RutasInfluencia() {
+        this.grafo = new HashMap<>();
+        this.mejorCamino = null;
+        this.mejorEfectividad = 0.0;
     }
     
-    /**
-     * Encuentra todas las rutas posibles entre dos usuarios (limitadas a un largo máximo).
-     */
-    public static List<List<String>> encontrarTodasLasRutas(Map<String, List<String>> grafo, 
-                                                             String origen, 
-                                                             String destino, 
-                                                             int longitudMaxima) {
-        List<List<String>> todasLasRutas = new ArrayList<>();
-        List<String> rutaActual = new ArrayList<>();
+    //Añade una conexión entre dos usuarios en el grafo.
+    public void agregarConexion(String origen, String destino) {
+        grafo.computeIfAbsent(origen, k -> new ArrayList<>()).add(destino);
+    }
+    
+    //busca las cadenas entre usuarios usando backtracking con poda.
+    public List<String> buscarCadenas(String origen, String destino) {
         Set<String> visitados = new HashSet<>();
+        List<String> caminoActual = new ArrayList<>();
+        mejorCamino = null;
+        mejorEfectividad = 0.0;
         
-        rutaActual.add(origen);
+        caminoActual.add(origen);
         visitados.add(origen);
         
-        buscarRutasDFS(grafo, origen, destino, rutaActual, visitados, todasLasRutas, longitudMaxima);
+        backtrack(origen, destino, visitados, caminoActual);
         
-        return todasLasRutas;
+        return mejorCamino;
     }
     
-    private static void buscarRutasDFS(Map<String, List<String>> grafo,
-                                        String actual,
-                                        String destino,
-                                        List<String> rutaActual,
-                                        Set<String> visitados,
-                                        List<List<String>> todasLasRutas,
-                                        int longitudMaxima) {
-        // Si alcanzamos el destino, guardamos la ruta
+    /**
+     * Implementa el backtracking con poda para encontrar el camino más efectivo.
+     */
+    private void backtrack(String actual, String destino, Set<String> visitados, List<String> caminoActual) {
+        // Caso base: llegamos al destino
         if (actual.equals(destino)) {
-            todasLasRutas.add(new ArrayList<>(rutaActual));
+            double efectividadActual = evaluarCamino(caminoActual);
+            if (mejorCamino == null || efectividadActual > mejorEfectividad) {
+                mejorCamino = new ArrayList<>(caminoActual);
+                mejorEfectividad = efectividadActual;
+            }
             return;
         }
         
-        // Si la ruta es demasiado larga, terminamos
-        if (rutaActual.size() >= longitudMaxima) {
+        // verificar si el camino actual puede mejorar
+        if (!puedeMejorar(caminoActual, mejorCamino)) {
             return;
         }
         
-        // Explorar vecinos
+        // ver vecinos
         List<String> vecinos = grafo.getOrDefault(actual, new ArrayList<>());
         for (String vecino : vecinos) {
             if (!visitados.contains(vecino)) {
-                rutaActual.add(vecino);
                 visitados.add(vecino);
+                caminoActual.add(vecino);
                 
-                buscarRutasDFS(grafo, vecino, destino, rutaActual, visitados, todasLasRutas, longitudMaxima);
+                backtrack(vecino, destino, visitados, caminoActual);
                 
-                // Backtrack
-                rutaActual.remove(rutaActual.size() - 1);
+                // volver para atras
                 visitados.remove(vecino);
+                caminoActual.remove(caminoActual.size() - 1);
             }
         }
     }
     
     /**
-     * Muestra la ruta de influencia encontrada.
+     * resolver la efectividad de un camino
+     */
+    private double evaluarCamino(List<String> camino) {
+        
+        if (camino.size() <= 1) return 0.0;
+        
+        double efectividad = 100.0; // Base inicial
+        
+        // Penalización por longitud
+        efectividad /= camino.size();
+        
+        // Bonus por conexiones de nodos intermedios
+        for (int i = 1; i < camino.size() - 1; i++) {
+            String nodo = camino.get(i);
+            int conexiones = grafo.getOrDefault(nodo, new ArrayList<>()).size();
+            efectividad += conexiones * 0.5; 
+        }
+        
+        return efectividad;
+    }
+    
+    /**
+     * evaluar si puede mejorar el camino
+     */
+    private boolean puedeMejorar(List<String> caminoActual, List<String> mejorCamino) {
+        if (mejorCamino == null) return true;
+        
+        if (caminoActual.size() > mejorCamino.size() * 1.5) {
+            return false;
+        }
+        
+        // estimacion de si hay nodos conectados
+        String ultimoNodo = caminoActual.get(caminoActual.size() - 1);
+        int conexionesRestantes = grafo.getOrDefault(ultimoNodo, new ArrayList<>()).size();
+        return conexionesRestantes > 0;
+    }
+    
+    /**
+     * muestra la ruta encontrada
      */
     public static void mostrarRuta(List<String> ruta, Map<String, String> nombresUsuarios) {
         System.out.println("\nRUTA DE INFLUENCIA ENCONTRADA");

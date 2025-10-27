@@ -13,7 +13,6 @@ import java.util.*;
  * - Se garantiza el camino más directo usando Dijkstra con cola de prioridad
  */
 public class RecomendacionAmigos {
-
     /**
      * clase que representa una arista
      */
@@ -35,9 +34,8 @@ public class RecomendacionAmigos {
          * recibe el grafo de amistades, el usuario origen y el servicio de interacciones (clase que calcula afinidad)
          * devuelve un mapa con las distancias mínimas desde el origen a todos los demás usuarios
          */
+
         
-
-
         // convertir el grafo
         Map<String, List<Arista>> grafoPonderado = construirGrafoPonderado(grafo, servicioInteracciones);
 

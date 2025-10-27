@@ -480,7 +480,7 @@ public class App {
 
     private static void ejecutarRutasInfluencia() {
         System.out.println("\n╔════════════════════════════════════════════════════════╗");
-        System.out.println("║  RUTAS DE INFLUENCIA - Búsqueda en Grafos (BFS)        ║");
+        System.out.println("║  RUTAS DE INFLUENCIA - Backtracking con Poda           ║");
         System.out.println("╚════════════════════════════════════════════════════════╝");
 
         if (servicioUsuarios.obtenerTodosLosUsuarios().isEmpty()) {
@@ -502,7 +502,17 @@ public class App {
         }
 
         Map<String, List<String>> grafo = servicioUsuarios.obtenerGrafoAmistades();
-        List<String> ruta = algoritmos.RutasInfluencia.rutaMasCorta(grafo, origen, destino);
+        
+        // crear instancia de RutasInfluencia 
+        algoritmos.RutasInfluencia rutasInfluencia = new algoritmos.RutasInfluencia();
+        for (Map.Entry<String, List<String>> entry : grafo.entrySet()) {
+            for (String destUsuario : entry.getValue()) {
+                rutasInfluencia.agregarConexion(entry.getKey(), destUsuario);
+            }
+        }
+        
+        // cadena mas efectiva
+        List<String> ruta = rutasInfluencia.buscarCadenas(origen, destino);
 
         Map<String, String> nombres = obtenerMapaNombres();
         algoritmos.RutasInfluencia.mostrarRuta(ruta, nombres);

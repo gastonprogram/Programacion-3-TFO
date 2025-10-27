@@ -84,9 +84,9 @@ public class OptimizacionPortada {
             int espacioUtilizado = 0;
             for (PublicacionModelo pub : publicacionesSeleccionadas) {
                 System.out.println("  • " + pub.getId() + 
-                                   " | Tamaño: " + pub.getTamano() + 
-                                   " | Beneficio: " + pub.getBeneficio() +
-                                   " | Likes: " + pub.getLikes());
+                                " | Tamaño: " + pub.getTamano() + 
+                                " | Beneficio: " + pub.getBeneficio() +
+                                " | Likes: " + pub.getLikes());
                 espacioUtilizado += pub.getTamano();
             }
             System.out.println("\nEspacio total utilizado: " + espacioUtilizado + " unidades");
